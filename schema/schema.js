@@ -71,7 +71,7 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(ScrabbleGameInfoType),
             args: { players: { type: new GraphQLList(GraphQLString) } },
             resolve(parent, args) {
-                return ScrabbleGameInfo.find({ players: args.players });
+                return ScrabbleGameInfo.find({ players: args.players }).sort({date: 1});
             }
         },
         getScrabbleGameById: {
