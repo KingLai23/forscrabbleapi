@@ -1,0 +1,736 @@
+mutation {
+  addScrabbleGame(players: ["king", "yannie"], gameInfo: [{name: "king", score: 208, words: [{word: ["d", "r", "i", "e", "s"], mult: [0, 0, 0, 0, 3], points: 12, bingo: false}, {word: ["d", "a", "d"], mult: [0, 0, 0], points: 5, bingo: false}, {word: ["a", "d"], mult: [0, 0], points: 3, bingo: false}, {word: ["c", "l", "o", "u", "d"], mult: [3, 0, 0, 0, 0], points: 16, bingo: false}, {word: ["e", "x"], mult: [0, 2], points: 25, bingo: false}, {word: ["g", "o", "o"], mult: [0, 0, 0], points: 4, bingo: false}, {word: ["w", "o", "a", "h"], mult: [0, 0, 0, 1], points: 14, bingo: false}, {word: ["m", "a", "c", "h"], mult: [1, 0, 0, 4], points: 42, bingo: false}, {word: ["o", "m"], mult: [0, 1], points: 7, bingo: false}, {word: ["t", "e", "e", "n", "s"], mult: [0, 0, 0, 0, 0], points: 5, bingo: false}, {word: ["p", "e", "e", "v", "e"], mult: [0, 0, 0, 0, 0], points: 10, bingo: false}, {word: ["r", "e", "d", "o", "n", "e"], mult: [5, 0, 1, 0, 0, 4], points: 24, bingo: false}, {word: ["h", "a", "v", "i", "o", "u", "r", "s"], mult: [4, 0, 0, 0, 1, 0, 0, 0], points: 45, bingo: false}], lostPoints: 4, lastLetters: ["e", "p"], finalScore: ["2", "0", "8"], otherPlayerTiles: {tiles: [], score: 0}}, {name: "yannie", score: 116, words: [{word: ["d", "r", "i", "e", "r"], mult: [0, 0, 0, 0, 3], points: 12, bingo: false}, {word: ["w", "i", "f", "e"], mult: [3, 0, 0, 0], points: 20, bingo: false}, {word: ["r", "i", "g"], mult: [0, 0, 0], points: 4, bingo: false}, {word: ["x", "i"], mult: [0, 0], points: 9, bingo: false}, {word: ["t", "a", "i", "l"], mult: [0, 0, 0, 0], points: 4, bingo: false}, {word: ["p", "l", "u", "m", "i", "e", "r"], mult: [0, 0, 0, 0, 0, 0, 0], points: 11, bingo: false}, {word: ["z", "e", "e"], mult: [0, 0, 0], points: 12, bingo: false}, {word: ["g", "r", "e", "a", "t"], mult: [4, 0, 0, 1, 0], points: 21, bingo: false}, {word: ["b", "o", "y"], mult: [1, 0, 1], points: 15, bingo: false}, {word: ["l", "e", "n", "t"], mult: [0, 0, 0, 0], points: 4, bingo: false}], lostPoints: 0, lastLetters: [], finalScore: ["1", "1", "6"], otherPlayerTiles: {tiles: ["e", "p"], score: 4}}]) {
+    id
+  }
+}
+
+{
+  scrabbleGameInfo(id: "63158e1b19086c352494f75f") {
+    gameInfo {
+      name
+      score
+    }
+  }
+}
+
+{
+  getScrabbleGamesByPlayers(players: ["king", "yannie"]) {
+    players
+    gameInfo {
+      name
+      score
+    }
+  }
+}
+
+
+
+
+[
+  {
+    name: "yannie",
+    score: 244,
+    words: [
+      {
+        word: [
+          "b",
+          "o",
+          "o",
+          "t",
+          "y"
+        ],
+        mult: [
+          5,
+          0,
+          3,
+          0,
+          0
+        ],
+        points: 14,
+        bingo: false
+      },
+      {
+        word: [
+          "w",
+          "i",
+          "n",
+          "c",
+          "e",
+          "r"
+        ],
+        mult: [
+          0,
+          1,
+          0,
+          0,
+          0,
+          3
+        ],
+        points: 24,
+        bingo: false
+      },
+      {
+        word: [
+          "t",
+          "e",
+          "w"
+        ],
+        mult: [
+          0,
+          0,
+          2
+        ],
+        points: 14,
+        bingo: false
+      },
+      {
+        word: [
+          "t",
+          "w",
+          "i",
+          "c",
+          "e"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        points: 10,
+        bingo: false
+      },
+      {
+        word: [
+          "p",
+          "e",
+          "n",
+          "t"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          4
+        ],
+        points: 18,
+        bingo: false
+      },
+      {
+        word: [
+          "d",
+          "u",
+          "b"
+        ],
+        mult: [
+          1,
+          0,
+          0
+        ],
+        points: 8,
+        bingo: false
+      },
+      {
+        word: [
+          "j",
+          "a",
+          "b"
+        ],
+        mult: [
+          0,
+          0,
+          0
+        ],
+        points: 12,
+        bingo: false
+      },
+      {
+        word: [
+          "b",
+          "a"
+        ],
+        mult: [
+          0,
+          0
+        ],
+        points: 4,
+        bingo: false
+      },
+      {
+        word: [
+          "m",
+          "u"
+        ],
+        mult: [
+          0,
+          0
+        ],
+        points: 4,
+        bingo: false
+      },
+      {
+        word: [
+          "m",
+          "u",
+          "s"
+        ],
+        mult: [
+          0,
+          0,
+          0
+        ],
+        points: 5,
+        bingo: false
+      },
+      {
+        word: [
+          "q",
+          "i",
+          "s"
+        ],
+        mult: [
+          3,
+          0,
+          0
+        ],
+        points: 24,
+        bingo: false
+      },
+      {
+        word: [
+          "q",
+          "i"
+        ],
+        mult: [
+          0,
+          0
+        ],
+        points: 11,
+        bingo: false
+      },
+      {
+        word: [
+          "w",
+          "i",
+          "n",
+          "c",
+          "e",
+          "r",
+          "s"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        points: 12,
+        bingo: false
+      },
+      {
+        word: [
+          "s",
+          "e",
+          "a",
+          "s"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          2
+        ],
+        points: 6,
+        bingo: false
+      },
+      {
+        word: [
+          "b",
+          "e",
+          "a",
+          "r",
+          "s"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        points: 9,
+        bingo: false
+      },
+      {
+        word: [
+          "d",
+          "e",
+          "a",
+          "l",
+          "t"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        points: 12,
+        bingo: false
+      },
+      {
+        word: [
+          "i",
+          "n",
+          "t",
+          "o",
+          "x"
+        ],
+        mult: [
+          0,
+          3,
+          0,
+          0,
+          0
+        ],
+        points: 24,
+        bingo: false
+      },
+      {
+        word: [
+          "f",
+          "o",
+          "r",
+          "t"
+        ],
+        mult: [
+          1,
+          0,
+          1,
+          0
+        ],
+        points: 12,
+        bingo: false
+      },
+      {
+        word: [
+          "r",
+          "e"
+        ],
+        mult: [
+          1,
+          0
+        ],
+        points: 3,
+        bingo: false
+      },
+      {
+        word: [
+          "q",
+          "i",
+          "n"
+        ],
+        mult: [
+          0,
+          0,
+          0
+        ],
+        points: 12,
+        bingo: false
+      },
+      {
+        word: [
+          "i",
+          "o",
+          "n"
+        ],
+        mult: [
+          0,
+          2,
+          0
+        ],
+        points: 5,
+        bingo: false
+      },
+      {
+        word: [
+          "a",
+          "t"
+        ],
+        mult: [
+          0,
+          0
+        ],
+        points: 2,
+        bingo: false
+      }
+    ],
+    lostPoints: 1,
+    lastLetters: [
+      "u"
+    ],
+    finalScore: [
+      "2",
+      "4",
+      "4"
+    ],
+    otherPlayerTiles: {
+      tiles: [],
+      score: 0
+    }
+  },
+  {
+    name: "king",
+    score: 405,
+    words: [
+      {
+        word: [
+          "c",
+          "a",
+          "n",
+          "e",
+          "r",
+          "y"
+        ],
+        mult: [
+          0,
+          0,
+          3,
+          0,
+          0,
+          0
+        ],
+        points: 22,
+        bingo: false
+      },
+      {
+        word: [
+          "y",
+          "o",
+          "w"
+        ],
+        mult: [
+          4,
+          0,
+          0
+        ],
+        points: 27,
+        bingo: false
+      },
+      {
+        word: [
+          "p",
+          "r",
+          "e",
+          "p"
+        ],
+        mult: [
+          1,
+          0,
+          0,
+          3
+        ],
+        points: 22,
+        bingo: false
+      },
+      {
+        word: [
+          "a",
+          "p"
+        ],
+        mult: [
+          0,
+          3
+        ],
+        points: 8,
+        bingo: false
+      },
+      {
+        word: [
+          "b",
+          "e",
+          "a",
+          "r"
+        ],
+        mult: [
+          2,
+          0,
+          0,
+          0
+        ],
+        points: 12,
+        bingo: false
+      },
+      {
+        word: [
+          "c",
+          "r",
+          "a",
+          "g"
+        ],
+        mult: [
+          0,
+          0,
+          3,
+          0
+        ],
+        points: 14,
+        bingo: false
+      },
+      {
+        word: [
+          "g",
+          "a",
+          "g"
+        ],
+        mult: [
+          0,
+          0,
+          3
+        ],
+        points: 10,
+        bingo: false
+      },
+      {
+        word: [
+          "m",
+          "o",
+          "o"
+        ],
+        mult: [
+          2,
+          0,
+          0
+        ],
+        points: 11,
+        bingo: false
+      },
+      {
+        word: [
+          "f",
+          "l",
+          "u"
+        ],
+        mult: [
+          0,
+          0,
+          0
+        ],
+        points: 6,
+        bingo: false
+      },
+      {
+        word: [
+          "g",
+          "a",
+          "g",
+          "e"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          0
+        ],
+        points: 6,
+        bingo: false
+      },
+      {
+        word: [
+          "t",
+          "h",
+          "i",
+          "e",
+          "v",
+          "e",
+          "d"
+        ],
+        mult: [
+          4,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        points: 104,
+        bingo: true
+      },
+      {
+        word: [
+          "d",
+          "u",
+          "b",
+          "s"
+        ],
+        mult: [
+          0,
+          0,
+          5,
+          1
+        ],
+        points: 5,
+        bingo: false
+      },
+      {
+        word: [
+          "t",
+          "a",
+          "n",
+          "d",
+          "e",
+          "m",
+          "s"
+        ],
+        mult: [
+          0,
+          0,
+          1,
+          0,
+          5,
+          0,
+          1
+        ],
+        points: 61,
+        bingo: true
+      },
+      {
+        word: [
+          "g",
+          "l",
+          "o",
+          "a",
+          "t"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          4,
+          0
+        ],
+        points: 18,
+        bingo: false
+      },
+      {
+        word: [
+          "l",
+          "e",
+          "a",
+          "v",
+          "e",
+          "d"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          3,
+          0,
+          0
+        ],
+        points: 20,
+        bingo: false
+      },
+      {
+        word: [
+          "z",
+          "e",
+          "n"
+        ],
+        mult: [
+          1,
+          0,
+          0
+        ],
+        points: 22,
+        bingo: false
+      },
+      {
+        word: [
+          "f",
+          "o",
+          "r",
+          "t",
+          "h"
+        ],
+        mult: [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        points: 11,
+        bingo: false
+      },
+      {
+        word: [
+          "x",
+          "i"
+        ],
+        mult: [
+          0,
+          2
+        ],
+        points: 11,
+        bingo: false
+      },
+      {
+        word: [
+          "g",
+          "o"
+        ],
+        mult: [
+          0,
+          3
+        ],
+        points: 6,
+        bingo: false
+      },
+      {
+        word: [
+          "o",
+          "d"
+        ],
+        mult: [
+          3,
+          0
+        ],
+        points: 6,
+        bingo: false
+      },
+      {
+        word: [
+          "l",
+          "i"
+        ],
+        mult: [
+          0,
+          2
+        ],
+        points: 4,
+        bingo: false
+      }
+    ],
+    lostPoints: 1,
+    lastLetters: [
+      "u"
+    ],
+    finalScore: [
+      "4",
+      "0",
+      "5"
+    ],
+    otherPlayerTiles: {
+      tiles: [],
+      score: 0
+    }
+  }
+]
