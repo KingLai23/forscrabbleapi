@@ -17,8 +17,9 @@ app.use('/graphql', graphqlHTTP({
    graphiql: true
 }));
  
-app.listen(process.env.PORT, () => {
-   console.log('Listening on port 4000');
+let port = process.env.PORT || 4000;
+app.listen(port, () => {
+   console.log('Listening on port' + port);
 });
 
 const mongoose = require('mongoose');
