@@ -23,7 +23,120 @@ mutation {
   }
 }
 
-
+[
+    {
+        name: "yannie",
+        score: 87,
+        words: [
+            {
+                word: [
+                    "H",
+                    "E",
+                    "L",
+                    "L",
+                    "O"
+                ],
+                mult: [
+                    0,
+                    0,
+                    0,
+                    0,
+                    3
+                ],
+                points: 16,
+                bingo: false
+            },
+            {
+                word: [
+                    "Q",
+                    "U",
+                    "O",
+                    "T",
+                    "E",
+                    "S"
+                ],
+                mult: [
+                    1,
+                    0,
+                    0,
+                    0,
+                    5,
+                    4
+                ],
+                points: 72,
+                bingo: false
+            }
+        ],
+        lostPoints: 1,
+        lastLetters: [
+            "A"
+        ],
+        finalScore: [
+            "8",
+            "7"
+        ],
+        otherPlayerTiles: {
+            tiles: [],
+            score: 0
+        }
+    },
+    {
+        name: "king",
+        score: 95,
+        words: [
+            {
+                word: [
+                    "I",
+                    "N",
+                    "S",
+                    "E",
+                    "R",
+                    "T",
+                    "E",
+                    "R"
+                ],
+                mult: [
+                    0,
+                    3,
+                    0,
+                    0,
+                    2,
+                    0,
+                    0,
+                    0
+                ],
+                points: 70,
+                bingo: true
+            },
+            {
+                word: [
+                    "Z",
+                    "E",
+                    "E"
+                ],
+                mult: [
+                    0,
+                    0,
+                    3
+                ],
+                points: 24,
+                bingo: false
+            }
+        ],
+        lostPoints: 0,
+        lastLetters: [],
+        finalScore: [
+            "9",
+            "5"
+        ],
+        otherPlayerTiles: {
+            tiles: [
+                "A"
+            ],
+            score: 1
+        }
+    }
+]
 
 
 [

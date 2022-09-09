@@ -14,7 +14,6 @@ const scrabbleGameInfoSchema = new Schema({
         }],
         lostPoints: Number,
         lastLetters: [String],
-        finalScore: [String],
         otherPlayerTiles: {
             tiles: [String],
             score: Number
