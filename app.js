@@ -27,5 +27,5 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_CLOUD || "mongodb://localhost:27017");
 
 mongoose.connection.once('open', () => {
-   console.log('connected to database');
+   console.log('connected to mongodb');
 });

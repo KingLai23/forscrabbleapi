@@ -1,6 +1,6 @@
 const graphql = require('graphql');
-const ScrabbleGameInfo = require('../models/ScrabbleGameInfo');
-const PlayerHighscore = require('../models/PlayerHighscore');
+const queryController = require ('../controllers/queryController');
+const mutationController = require('../controllers/mutationController');
 
 const {
     GraphQLObjectType,
@@ -39,7 +39,6 @@ const GameInfoType = new GraphQLObjectType({
         words: { type: new GraphQLList(WordInfoType) },
         lostPoints: { type: GraphQLInt },
         lastLetters: { type: new GraphQLList(GraphQLString) },
-        finalScore: { type: new GraphQLList(GraphQLString) },
         otherPlayerTiles: { type: OtherPlayerTilesType }
     })
 });
@@ -54,13 +53,19 @@ const ScrabbleGameInfoType = new GraphQLObjectType({
     })
 });
 
-const PlayerHighscoreType = new GraphQLObjectType({
+const PlayerHighScoresType = new GraphQLObjectType({
     name: 'PlayerHighscore',
     fields: () => ({
-        id: { type: GraphQLID },
-        name: { type: GraphQLString },
-        highscore: { type: GraphQLInt },
-        scrabbleGameId: { type: GraphQLID }
+        scrabbleGameId: { type: GraphQLID },
+        score: { type: GraphQLInt }
+    })
+});
+
+const PlayerHighestWordsType = new GraphQLObjectType({
+    name: 'PlayerHighscore',
+    fields: () => ({
+        scrabbleGameId: { type: GraphQLID },
+        word: { type: WordInfoType }
     })
 });
 
@@ -71,25 +76,47 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(ScrabbleGameInfoType),
             args: { players: { type: new GraphQLList(GraphQLString) } },
             resolve(parent, args) {
-                return ScrabbleGameInfo.find({ players: args.players }).sort({date: -1});
+                return queryController.getScrabbleGamesByPlayers(args);
             }
         },
         getScrabbleGameById: {
             type: ScrabbleGameInfoType,
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return ScrabbleGameInfo.findById(args.id);
+                return queryController.getScrabbleGameById(args);
+            }
+        },
+        getScrabbleGamesOfAPlayer: {
+            type: new GraphQLList(ScrabbleGameInfoType),
+            args: { player: { type: GraphQLString } },
+            resolve(parent, args) {
+                return queryController.getScrabbleGamesOfAPlayer(args);
+            }
+        },
+        getHighscoresOfAPlayer: {
+            type: new GraphQLList(PlayerHighScoresType),
+            args: { player: { type: GraphQLString } },
+            resolve(parent, args) {
+                return queryController.getHighscoresOfAPlayer(args);
+            }
+        },
+        getHighestSingleWordScoresOfAPlayer: {
+            type: new GraphQLList(WordInfoType),
+            args: { player: { type: GraphQLString } },
+            resolve(parent, args) {
+                return queryController.getHighestWordScoresOfAPlayer(args);
             }
         }
     }
  });
 
- const WordInfoInputType = new GraphQLInputObjectType({
+//  MUTATIONS
+const WordInfoInputType = new GraphQLInputObjectType({
     name: 'WordInfoInput',
     fields: () => ({
-        word: { type: new GraphQLList(GraphQLString) }, 
-        mult: { type: new GraphQLList(GraphQLInt) }, 
-        points: { type: GraphQLInt }, 
+        word: { type: new GraphQLList(GraphQLString) },
+        mult: { type: new GraphQLList(GraphQLInt) },
+        points: { type: GraphQLInt },
         bingo: { type: GraphQLBoolean }
     })
 });
@@ -110,7 +137,6 @@ const GameInfoInputType = new GraphQLInputObjectType({
         words: { type: new GraphQLList(WordInfoInputType) },
         lostPoints: { type: GraphQLInt },
         lastLetters: { type: new GraphQLList(GraphQLString) },
-        finalScore: { type: new GraphQLList(GraphQLString) },
         otherPlayerTiles: { type: OtherPlayerTilesInputType }
     })
 });
@@ -125,12 +151,7 @@ const GameInfoInputType = new GraphQLInputObjectType({
                 gameInfo: { type: new GraphQLList(GameInfoInputType) }
             },
             resolve(parent, args) {
-                let scrabbleGameInfo = new ScrabbleGameInfo({
-                    players: args.players,
-                    gameInfo: args.gameInfo,
-                    date: new Date().toISOString()
-                });
-                return scrabbleGameInfo.save();
+                return mutationController.addScrabbleGame(args);
             }
         }
     }
