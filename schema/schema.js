@@ -6,6 +6,7 @@ const {
     GraphQLObjectType,
     GraphQLInputObjectType,
     GraphQLString,
+    GraphQLFloat,
     GraphQLID,
     GraphQLInt,
     GraphQLBoolean,
@@ -57,15 +58,37 @@ const PlayerHighScoresType = new GraphQLObjectType({
     name: 'PlayerHighscore',
     fields: () => ({
         scrabbleGameId: { type: GraphQLID },
-        score: { type: GraphQLInt }
+        score: { type: GraphQLInt },
+        date: { type: GraphQLString }
     })
 });
 
-const PlayerHighestWordsType = new GraphQLObjectType({
-    name: 'PlayerHighscore',
+const PlayerSingleGameInfoType = new GraphQLObjectType({
+    name: 'PlayerSingleGameInfo',
     fields: () => ({
-        scrabbleGameId: { type: GraphQLID },
-        word: { type: WordInfoType }
+        gamesPlayed: { type: GraphQLInt },
+        gamesWon: { type: GraphQLInt },
+        averageScore: { type: GraphQLFloat }
+    })
+});
+
+const PlayerTotalGamesInfoType = new GraphQLObjectType({
+    name: 'PlayerTotalGamesInfo',
+    fields: () => ({
+        twoPlayer: { type: PlayerSingleGameInfoType },
+        threePlayer: { type: PlayerSingleGameInfoType },
+        fourPlayer: { type: PlayerSingleGameInfoType },
+        total: { type: PlayerSingleGameInfoType }
+    })
+});
+
+const PlayerStatsType = new GraphQLObjectType({
+    name: 'PlayerStats',
+    fields: () => ({
+        name: { type: GraphQLString },
+        gamesInfo: { type: PlayerTotalGamesInfoType },
+        gameHighscores: { type: new GraphQLList(PlayerHighScoresType) },
+        wordHighscores: { type: new GraphQLList(WordInfoType) }
     })
 });
 
@@ -105,6 +128,13 @@ const RootQuery = new GraphQLObjectType({
             args: { player: { type: GraphQLString } },
             resolve(parent, args) {
                 return queryController.getHighestWordScoresOfAPlayer(args);
+            }
+        },
+        getPlayerStats: {
+            type: PlayerStatsType,
+            args: { player: { type: GraphQLString }},
+            resolve(parent, args) {
+                return queryController.getPlayerStats(args);
             }
         }
     }
