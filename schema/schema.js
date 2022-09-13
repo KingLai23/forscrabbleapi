@@ -54,12 +54,21 @@ const ScrabbleGameInfoType = new GraphQLObjectType({
     })
 });
 
-const PlayerHighScoresType = new GraphQLObjectType({
-    name: 'PlayerHighscore',
+const PlayerGameHighScoresType = new GraphQLObjectType({
+    name: 'PlayerGameHighscore',
     fields: () => ({
         scrabbleGameId: { type: GraphQLID },
         score: { type: GraphQLInt },
         date: { type: GraphQLString }
+    })
+});
+
+const PlayerHighscoresType = new GraphQLObjectType({
+    name: 'PlayerHighscores',
+    fields: () => ({
+        twoPlayer: { type: new GraphQLList(PlayerGameHighScoresType) },
+        threePlayer: { type: new GraphQLList(PlayerGameHighScoresType) },
+        fourPlayer: { type: new GraphQLList(PlayerGameHighScoresType) }
     })
 });
 
@@ -87,7 +96,7 @@ const PlayerStatsType = new GraphQLObjectType({
     fields: () => ({
         name: { type: GraphQLString },
         gamesInfo: { type: PlayerTotalGamesInfoType },
-        gameHighscores: { type: new GraphQLList(PlayerHighScoresType) },
+        gameHighscores: { type: PlayerHighscoresType },
         wordHighscores: { type: new GraphQLList(WordInfoType) }
     })
 });
@@ -114,20 +123,6 @@ const RootQuery = new GraphQLObjectType({
             args: { player: { type: GraphQLString } },
             resolve(parent, args) {
                 return queryController.getScrabbleGamesOfAPlayer(args);
-            }
-        },
-        getHighscoresOfAPlayer: {
-            type: new GraphQLList(PlayerHighScoresType),
-            args: { player: { type: GraphQLString } },
-            resolve(parent, args) {
-                return queryController.getHighscoresOfAPlayer(args);
-            }
-        },
-        getHighestSingleWordScoresOfAPlayer: {
-            type: new GraphQLList(WordInfoType),
-            args: { player: { type: GraphQLString } },
-            resolve(parent, args) {
-                return queryController.getHighestWordScoresOfAPlayer(args);
             }
         },
         getPlayerStats: {
