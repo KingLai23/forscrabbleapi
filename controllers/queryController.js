@@ -17,7 +17,7 @@ exports.getPlayerStats = function getPlayerStats(args) {
         try {
             ScrabbleGameInfo.find({ players: args.player }, function (err, games) {
                 if (err) return reject(err);
-                if (!games) return reject(new Error('No words found'));
+                if (!games) return reject(new Error('No stats found'));
 
                 let twoPlayerGamesList = [];
                 let threePlayerGamesList = [];
@@ -89,7 +89,9 @@ exports.getPlayerStats = function getPlayerStats(args) {
                 fourPlayerGamesList.sort(function(a,b) { return b.score - a.score });
 
                 allPlayerWords.sort(function(a,b) { return b.points - a.points });
-                numRecordsToReturn = 10;
+
+                let numHighscoreGames = args.numGameHS;
+                let numHighscoreWords = args.numWordHS;
 
                 let totalGamesPlayed = gameInfoTracker.twoPlayer.played + gameInfoTracker.threePlayer.played + gameInfoTracker.fourPlayer.played;
                 let totalWins = gameInfoTracker.twoPlayer.wins + gameInfoTracker.threePlayer.wins + gameInfoTracker.fourPlayer.wins;
@@ -120,15 +122,53 @@ exports.getPlayerStats = function getPlayerStats(args) {
                         },
                     },
                     gameHighscores: {
-                        twoPlayer: twoPlayerGamesList.length < numRecordsToReturn ? twoPlayerGamesList : twoPlayerGamesList.slice(0, numRecordsToReturn),
-                        threePlayer: threePlayerGamesList.length < numRecordsToReturn ? threePlayerGamesList : threePlayerGamesList.slice(0, numRecordsToReturn),
-                        fourPlayer: fourPlayerGamesList.length < numRecordsToReturn ? fourPlayerGamesList : fourPlayerGamesList.slice(0, numRecordsToReturn)
+                        twoPlayer: twoPlayerGamesList.length < numHighscoreGames ? twoPlayerGamesList : twoPlayerGamesList.slice(0, numHighscoreGames),
+                        threePlayer: threePlayerGamesList.length < numHighscoreGames ? threePlayerGamesList : threePlayerGamesList.slice(0, numHighscoreGames),
+                        fourPlayer: fourPlayerGamesList.length < numHighscoreGames ? fourPlayerGamesList : fourPlayerGamesList.slice(0, numHighscoreGames)
                     },
-                    wordHighscores: allPlayerWords.length < numRecordsToReturn ? allPlayerWords : allPlayerWords.slice(0, numRecordsToReturn)
+                    wordHighscores: allPlayerWords.length < numHighscoreWords ? allPlayerWords : allPlayerWords.slice(0, numHighscoreWords)
                 };
 
                 return resolve(playerStats);
             });
+        } catch (err) {
+            return reject(err);
+        }
+    });
+}
+
+exports.getScrabbleGamesWithPlayers = function getScrabbleGamesWithPlayers(args) {
+    return new Promise((resolve, reject) => {
+        try {
+            ScrabbleGameInfo.find({ players: { $all: args.players }}, function (err, games) {
+                if (err) return reject(err);
+                if (!games) return reject(new Error('No stats found'));
+
+                let names = args.players.sort();
+
+                let gamesTogether = [];
+
+                games.forEach(function(game) {
+                    let currentScores = [];
+
+                    for (let p of names) {
+                        currentScores.push(game.gameInfo.find(e => e.name == p).score);
+                    }
+
+                    gamesTogether.push({
+                        scrabbleGameId: game.id,
+                        date: game.date,
+                        scores: currentScores
+                    });
+                });
+
+                let gamesFound = {
+                    players: names,
+                    gamesTogether: gamesTogether
+                }
+
+                return resolve(gamesFound);
+            }).sort({date: -1}).limit(args.numGames);
         } catch (err) {
             return reject(err);
         }

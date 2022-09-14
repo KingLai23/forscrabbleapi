@@ -101,6 +101,23 @@ const PlayerStatsType = new GraphQLObjectType({
     })
 });
 
+const GroupedPlayerStatsType = new GraphQLObjectType({
+    name: 'GroupedPlayerStats',
+    fields: () => ({
+        scrabbleGameId: { type: GraphQLID },
+        date: { type: GraphQLString },
+        scores: { type: new GraphQLList(GraphQLInt) }
+    })
+});
+
+const ScrabbleGamesWithPlayersType = new GraphQLObjectType({
+    name: 'ScrabbleGamesWithPlayers',
+    fields: () => ({
+        players: { type: new GraphQLList(GraphQLString) },
+        gamesTogether: { type: new GraphQLList(GroupedPlayerStatsType) }
+    })
+});
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -109,6 +126,15 @@ const RootQuery = new GraphQLObjectType({
             args: { players: { type: new GraphQLList(GraphQLString) } },
             resolve(parent, args) {
                 return queryController.getScrabbleGamesByPlayers(args);
+            }
+        },
+        getScrabbleGamesWithPlayers: {
+            type: ScrabbleGamesWithPlayersType,
+            args: { players: { type: new GraphQLList(GraphQLString) },
+                    numGames: { type: GraphQLInt }
+            },
+            resolve(parent, args) {
+                return queryController.getScrabbleGamesWithPlayers(args);
             }
         },
         getScrabbleGameById: {
@@ -127,7 +153,10 @@ const RootQuery = new GraphQLObjectType({
         },
         getPlayerStats: {
             type: PlayerStatsType,
-            args: { player: { type: GraphQLString }},
+            args: { player: { type: GraphQLString },
+                    numGameHS: { type: GraphQLInt },
+                    numWordHS: { type: GraphQLInt }
+            },
             resolve(parent, args) {
                 return queryController.getPlayerStats(args);
             }
