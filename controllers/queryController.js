@@ -174,3 +174,64 @@ exports.getScrabbleGamesWithPlayers = function getScrabbleGamesWithPlayers(args)
         }
     });
 }
+
+exports.getAlltimeStats = function getAlltimeStats(args) {
+    return new Promise((resolve, reject) => {
+        try {
+            ScrabbleGameInfo.find({}, function (err, games) {
+                if (err) return reject(err);
+                if (!games) return reject(new Error('No stats found'));
+
+                let twoPlayerGameHS = [];
+                let threePlayerGameHS = [];
+                let fourPlayerGameHS = [];
+
+                let wordHS = [];
+
+                games.forEach(function(game) {
+                    let temp = [];
+                    for (let info of game.gameInfo) {
+                        temp.push({player: info.name, score: info.score, scrabbleGameId: game.id});
+
+                        for (let word of info.words) {
+                            wordHS.push({ player: info.name, word: word, scrabbleGameId: game.id, score: word.points});
+                        }
+                    }
+
+                    switch (game.players.length) {
+                        case 2:
+                            twoPlayerGameHS = twoPlayerGameHS.concat(temp);
+                            break;
+                        case 3:
+                            threePlayerGameHS = threePlayerGameHS.concat(temp);
+                            break;
+                        case 4:
+                            fourPlayerGameHS = fourPlayerGameHS.concat(temp);
+                            break;
+                        default:
+                    }
+                      
+                });
+
+                twoPlayerGameHS.sort(function(a,b) { return b.score - a.score });
+                threePlayerGameHS.sort(function(a,b) { return b.score - a.score });
+                fourPlayerGameHS.sort(function(a,b) { return b.score - a.score });
+
+                wordHS.sort(function(a,b) { return b.score - a.score });
+
+                let finalAlltimeStats = {
+                    gameHS: {
+                        twoPlayer: twoPlayerGameHS.length < args.numGameHS ? twoPlayerGameHS : twoPlayerGameHS.slice(0, args.numGameHS),
+                        threePlayer: threePlayerGameHS.length < args.numGameHS ? threePlayerGameHS : threePlayerGameHS.slice(0, args.numGameHS),
+                        fourPlayer: fourPlayerGameHS.length < args.numGameHS ? fourPlayerGameHS : fourPlayerGameHS.slice(0, args.numGameHS),
+                    },
+                    wordHS: wordHS.length < args.numWordHS ? wordHS : wordHS.slice(0, args.numWordHS)
+                }
+
+                return resolve(finalAlltimeStats);
+            })
+        } catch (err) {
+            return reject(err);
+        }
+    });
+}

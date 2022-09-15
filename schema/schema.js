@@ -118,6 +118,41 @@ const ScrabbleGamesWithPlayersType = new GraphQLObjectType({
     })
 });
 
+const AlltimeSingleGameHSType = new GraphQLObjectType({
+    name: 'AlltimeSingleGameHS',
+    fields: () => ({
+        player: { type: GraphQLString },
+        score: { type: GraphQLInt },
+        scrabbleGameId: { type: GraphQLID }   
+    })
+});
+
+const AlltimeGameHSType = new GraphQLObjectType({
+    name: 'AlltimeGameHS',
+    fields: () => ({
+        twoPlayer: { type: new GraphQLList(AlltimeSingleGameHSType) },
+        threePlayer: { type: new GraphQLList(AlltimeSingleGameHSType) },
+        fourPlayer: { type: new GraphQLList(AlltimeSingleGameHSType) },
+    })
+});
+
+const AlltimeWordHSType = new GraphQLObjectType({
+    name: 'AlltimeWordHS',
+    fields: () => ({
+        player: { type: GraphQLString },
+        word: { type: WordInfoType },
+        scrabbleGameId: { type: GraphQLID }
+    })
+});
+
+const AlltimeStatsType = new GraphQLObjectType({
+    name: 'AlltimeStats',
+    fields: () => ({
+        gameHS: { type: AlltimeGameHSType },
+        wordHS: { type: new GraphQLList(AlltimeWordHSType) }
+    })
+});
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -159,6 +194,16 @@ const RootQuery = new GraphQLObjectType({
             },
             resolve(parent, args) {
                 return queryController.getPlayerStats(args);
+            }
+        },
+        getAlltimeStats: {
+            type: AlltimeStatsType,
+            args: { 
+                numGameHS: { type: GraphQLInt },
+                numWordHS: { type: GraphQLInt }
+            },
+            resolve(parent, args) {
+                return queryController.getAlltimeStats(args);
             }
         }
     }
