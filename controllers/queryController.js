@@ -191,7 +191,7 @@ exports.getAlltimeStats = function getAlltimeStats(args) {
                 games.forEach(function(game) {
                     let temp = [];
                     for (let info of game.gameInfo) {
-                        temp.push({player: info.name, score: info.score, scrabbleGameId: game.id});
+                        temp.push({player: info.name, score: info.score, date: game.date, scrabbleGameId: game.id});
 
                         for (let word of info.words) {
                             wordHS.push({ player: info.name, word: word, scrabbleGameId: game.id, score: word.points});

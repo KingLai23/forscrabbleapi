@@ -123,6 +123,7 @@ const AlltimeSingleGameHSType = new GraphQLObjectType({
     fields: () => ({
         player: { type: GraphQLString },
         score: { type: GraphQLInt },
+        date: { type: GraphQLString },
         scrabbleGameId: { type: GraphQLID }   
     })
 });
