@@ -206,6 +206,16 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args) {
                 return queryController.getAlltimeStats(args);
             }
+        },
+        getScrabbleHistoryOfPlayers: {
+            type: new GraphQLList(ScrabbleGameInfoType),
+            args: { players: { type: new GraphQLList(GraphQLString) },
+                    pageNum: { type: GraphQLInt },
+                    pageSize: { type: GraphQLInt }
+            },
+            resolve(parent, args) {
+                return queryController.getScrabbleHistoryOfPlayers(args);
+            }
         }
     }
  });

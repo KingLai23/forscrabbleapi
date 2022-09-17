@@ -235,3 +235,10 @@ exports.getAlltimeStats = function getAlltimeStats(args) {
         }
     });
 }
+
+exports.getScrabbleHistoryOfPlayers = function getScrabbleHistoryOfPlayers(args) {
+    let skipNum = (args.pageNum - 1) * args.pageSize;
+    let limitNum = args.pageSize;
+
+    return ScrabbleGameInfo.find({ players: { $all: args.players }}).sort({date: -1}).skip(skipNum).limit(limitNum);
+}
