@@ -50,6 +50,7 @@ const ScrabbleGameInfoType = new GraphQLObjectType({
         id: { type: GraphQLID },
         players: { type: new GraphQLList(GraphQLString) },
         gameInfo: { type: new GraphQLList(GameInfoType) },
+        boardState: { type: new GraphQLList( new GraphQLList(GraphQLString)) },
         date: { type: GraphQLString }
     })
 });
@@ -258,7 +259,8 @@ const GameInfoInputType = new GraphQLInputObjectType({
             type: ScrabbleGameInfoType,
             args: {
                 players: { type: new GraphQLList(GraphQLString) },
-                gameInfo: { type: new GraphQLList(GameInfoInputType) }
+                gameInfo: { type: new GraphQLList(GameInfoInputType) },
+                boardState: { type: new GraphQLList( new GraphQLList(GraphQLString)) }
             },
             resolve(parent, args) {
                 return mutationController.addScrabbleGame(args);

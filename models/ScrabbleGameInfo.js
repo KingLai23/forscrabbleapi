@@ -19,6 +19,7 @@ const scrabbleGameInfoSchema = new Schema({
             score: Number
         }
     }],
+    boardState: [[String]],
     date: String
 });
 
