@@ -78,7 +78,8 @@ const PlayerSingleGameInfoType = new GraphQLObjectType({
     fields: () => ({
         gamesPlayed: { type: GraphQLInt },
         gamesWon: { type: GraphQLInt },
-        averageScore: { type: GraphQLFloat }
+        averageScore: { type: GraphQLFloat },
+        sd: { type: GraphQLFloat }
     })
 });
 

@@ -1,4 +1,5 @@
 const ScrabbleGameInfo = require('../models/ScrabbleGameInfo');
+const { mean, std } = require('mathjs');
 
 exports.getScrabbleGamesByPlayers = function getScrabbleGamesByPlayers(args) {
     return ScrabbleGameInfo.find({ players: args.players }).sort({date: -1});
@@ -27,17 +28,17 @@ exports.getPlayerStats = function getPlayerStats(args) {
 
                 let gameInfoTracker = {
                     twoPlayer: {
-                        totalPoints: 0,
+                        totalPoints: [],
                         wins: 0,
                         played: 0
                     },
                     threePlayer: {
-                        totalPoints: 0,
+                        totalPoints: [],
                         wins: 0,
                         played: 0
                     },
                     fourPlayer: {
-                        totalPoints: 0,
+                        totalPoints: [],
                         wins: 0,
                         played: 0
                     }
@@ -63,21 +64,21 @@ exports.getPlayerStats = function getPlayerStats(args) {
                             twoPlayerGamesList.push(currentGame);
 
                             gameInfoTracker.twoPlayer.played+=1;
-                            gameInfoTracker.twoPlayer.totalPoints+=game.gameInfo.find(e => e.name == args.player).score;
+                            gameInfoTracker.twoPlayer.totalPoints.push(game.gameInfo.find(e => e.name == args.player).score);
                             if (gameScores[0].name == args.player) gameInfoTracker.twoPlayer.wins+=1;
                             break;
                         case 3:
                             threePlayerGamesList.push(currentGame);
 
                             gameInfoTracker.threePlayer.played+=1;
-                            gameInfoTracker.threePlayer.totalPoints+=game.gameInfo.find(e => e.name == args.player).score;
+                            gameInfoTracker.threePlayer.totalPoints.push(game.gameInfo.find(e => e.name == args.player).score);
                             if (gameScores[0].name == args.player) gameInfoTracker.threePlayer.wins+=1;
                             break;
                         case 4:
                             fourPlayerGamesList.push(currentGame);
 
                             gameInfoTracker.fourPlayer.played+=1;
-                            gameInfoTracker.fourPlayer.totalPoints+=game.gameInfo.find(e => e.name == args.player).score;
+                            gameInfoTracker.fourPlayer.totalPoints.push(game.gameInfo.find(e => e.name == args.player).score);
                             if (gameScores[0].name == args.player) gameInfoTracker.fourPlayer.wins+=1;
                             break;
                         default:
@@ -95,7 +96,6 @@ exports.getPlayerStats = function getPlayerStats(args) {
 
                 let totalGamesPlayed = gameInfoTracker.twoPlayer.played + gameInfoTracker.threePlayer.played + gameInfoTracker.fourPlayer.played;
                 let totalWins = gameInfoTracker.twoPlayer.wins + gameInfoTracker.threePlayer.wins + gameInfoTracker.fourPlayer.wins;
-                let totalScore = gameInfoTracker.twoPlayer.totalPoints + gameInfoTracker.threePlayer.totalPoints + gameInfoTracker.fourPlayer.totalPoints;
 
                 let playerStats = {
                     name: args.player,
@@ -103,22 +103,26 @@ exports.getPlayerStats = function getPlayerStats(args) {
                         twoPlayer: {
                             gamesPlayed: gameInfoTracker.twoPlayer.played, 
                             gamesWon: gameInfoTracker.twoPlayer.wins, 
-                            averageScore: gameInfoTracker.twoPlayer.played > 0 ? (parseFloat(gameInfoTracker.twoPlayer.totalPoints) / parseFloat(gameInfoTracker.twoPlayer.played)).toFixed(1) : 0
+                            averageScore: mean(gameInfoTracker.twoPlayer.totalPoints).toFixed(1),
+                            sd: std(gameInfoTracker.twoPlayer.totalPoints).toFixed(1)
                         }, 
                         threePlayer: {
                             gamesPlayed: gameInfoTracker.threePlayer.played, 
                             gamesWon: gameInfoTracker.threePlayer.wins, 
-                            averageScore: gameInfoTracker.threePlayer.played > 0 ? (parseFloat(gameInfoTracker.threePlayer.totalPoints) / parseFloat(gameInfoTracker.threePlayer.played)).toFixed(1) : 0
+                            averageScore: mean(gameInfoTracker.threePlayer.totalPoints).toFixed(1),
+                            sd: std(gameInfoTracker.threePlayer.totalPoints).toFixed(1)
                         }, 
                         fourPlayer: {
                             gamesPlayed: gameInfoTracker.fourPlayer.played, 
                             gamesWon: gameInfoTracker.fourPlayer.wins, 
-                            averageScore: gameInfoTracker.fourPlayer.played > 0 ? (parseFloat(gameInfoTracker.fourPlayer.totalPoints) / parseFloat(gameInfoTracker.fourPlayer.played)).toFixed(1) : 0
+                            averageScore: mean(gameInfoTracker.fourPlayer.totalPoints).toFixed(1),
+                            sd: std(gameInfoTracker.fourPlayer.totalPoints).toFixed(1)
                         }, 
                         total: {
                             gamesPlayed: totalGamesPlayed, 
                             gamesWon: totalWins, 
-                            averageScore: totalGamesPlayed > 0 ? (parseFloat(totalScore) / parseFloat(totalGamesPlayed)).toFixed(1) : 0
+                            averageScore: 0,
+                            sd: 0
                         },
                     },
                     gameHighscores: {
