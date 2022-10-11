@@ -152,18 +152,23 @@ exports.getScrabbleGamesWithPlayers = function getScrabbleGamesWithPlayers(args)
 
                 let gamesTogether = [];
 
+                let i = 0;
                 games.forEach(function(game) {
-                    let currentScores = [];
+                    if (i < args.numGames && game.players.length === args.gameType) {
+                        let currentScores = [];
 
-                    for (let p of names) {
-                        currentScores.push(game.gameInfo.find(e => e.name == p).score);
+                        for (let p of names) {
+                            currentScores.push(game.gameInfo.find(e => e.name == p).score);
+                        }
+
+                        gamesTogether.push({
+                            scrabbleGameId: game.id,
+                            date: game.date,
+                            scores: currentScores
+                        });
+
+                        i++;
                     }
-
-                    gamesTogether.push({
-                        scrabbleGameId: game.id,
-                        date: game.date,
-                        scores: currentScores
-                    });
                 });
 
                 let gamesFound = {
@@ -172,7 +177,7 @@ exports.getScrabbleGamesWithPlayers = function getScrabbleGamesWithPlayers(args)
                 }
 
                 return resolve(gamesFound);
-            }).sort({date: -1}).limit(args.numGames);
+            }).sort({date: -1});
         } catch (err) {
             return reject(err);
         }

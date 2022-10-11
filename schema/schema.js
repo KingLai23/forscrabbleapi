@@ -169,7 +169,8 @@ const RootQuery = new GraphQLObjectType({
         getScrabbleGamesWithPlayers: {
             type: ScrabbleGamesWithPlayersType,
             args: { players: { type: new GraphQLList(GraphQLString) },
-                    numGames: { type: GraphQLInt }
+                    numGames: { type: GraphQLInt },
+                    gameType: { type: GraphQLInt }
             },
             resolve(parent, args) {
                 return queryController.getScrabbleGamesWithPlayers(args);
